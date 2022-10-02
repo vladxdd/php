@@ -75,9 +75,6 @@ abstract class View
     abstract function displayTextById();
     abstract function displayTextByUrl();
 
-
-    //awdawdawdawdawdawd
-
 }
 
 abstract class User
