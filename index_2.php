@@ -1,7 +1,6 @@
 <?php
 
 
-
 class TelegraphText
 {
     public $title;
@@ -9,7 +8,7 @@ class TelegraphText
     public $author;
     public $published;
     public $slug;
-    public $serialized;
+
 
     public function __construct($author, $slug)
     {
@@ -27,7 +26,6 @@ class TelegraphText
             "time" => $this->published
         );
         $ser = serialize($arr);
-        $this->serialized = serialize($arr);
 
         if (file_exists($this->slug)) {
             $current = file_get_contents($this->slug);
@@ -56,12 +54,17 @@ class TelegraphText
     }
 
 }
+
 abstract class Storage
 {
     abstract function create();
+
     abstract function read();
+
     abstract function update();
+
     abstract function delete();
+
     abstract function list();
 
 }
@@ -69,10 +72,13 @@ abstract class Storage
 abstract class View
 {
     public $storage;
+
     public function __construct()
     {
     }
+
     abstract function displayTextById();
+
     abstract function displayTextByUrl();
 
 }
@@ -82,24 +88,54 @@ abstract class User
     public $id;
     public $name;
     public $role;
+
     abstract function getTextsToEdit();
 }
 
-class FileStorage
+class FileStorage extends TelegraphText
 {
+    public $dir = "~Desktop/PHP/Telegraph";
     function create()
     {
-        TelegraphText::$serialized."_".date("D: h-i-sa");
+        $x = 1;
+        $this->slug .= '_' . date("F j, Y, g:i a");
+
+        if (file_exists($this->slug)) {
+            while (file_exists($this->slug . '_' . $x)) {
+                $x++;
+            }
+            $this->slug .= '_' . $x;
+        }
+        return $this->slug;
+    }
+    public function read($slug)
+    {
+        $this->slug = unserialize(file_get_contents($this->slug));
+    }
+
+    public function update($slug)
+    {
+        $this->slug = unserialize(file_get_contents($this->slug));
+    }
+
+    public function delete($slug)
+    {
+        $this->slug = unserialize(file_get_contents($this->slug));
+    }
+
+    public function list()
+    {
+        $search = scandir($this->dir);
     }
 }
 
 
-
-
-
 $telegraph = new TelegraphText("Vlad", "ax.txt");
-$telegraph->editText("Changed", "Ept");
+$telegraph->editText("awdad", "awdwd");
 $telegraph->storeText();
 $telegraph->loadText();
+$x = new FileStorage("Vlados", "aaaaa");
+$x->create();
+
 
 
