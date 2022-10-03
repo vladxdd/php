@@ -134,8 +134,7 @@ $telegraph = new TelegraphText("Vlad", "ax.txt");
 $telegraph->editText("awdad", "awdwd");
 $telegraph->storeText();
 $telegraph->loadText();
-$x = new FileStorage("Vlados", "aaaaa");
-$x->create();
+
 
 
 
