@@ -94,19 +94,19 @@ abstract class User
 
 class FileStorage extends TelegraphText
 {
-    public $dir = "~Desktop/PHP/Telegraph";
-    function create()
+    public static $dir = "~Desktop/PHP/Telegraph";
+    public function create($text)
     {
         $x = 1;
-        $this->slug .= '_' . date("F j, Y, g:i a");
+        $fn = $text->slug.date("_d-m-y");
 
-        if (file_exists($this->slug)) {
-            while (file_exists($this->slug . '_' . $x)) {
+            while (file_exists(file_exists(self::$dir.$fn))) {
+                $fn = $text->slug.date("_d-m-y").$x;
                 $x++;
-            }
-            $this->slug .= '_' . $x;
         }
-        return $this->slug;
+        $text->slug = $fn;
+            file_put_contents(self::$dir.$fn, serialize($text));
+        return $fn;
     }
     public function read($slug)
     {
