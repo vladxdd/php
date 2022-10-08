@@ -1,6 +1,5 @@
 <?php
 
-
 class TelegraphText
 {
     public $title;
@@ -56,89 +55,7 @@ class TelegraphText
 
 }
 
-abstract class Storage
-{
-    abstract function create();
-
-    abstract function read();
-
-    abstract function update();
-
-    abstract function delete();
-
-    abstract function list();
-
-}
-
-abstract class View
-{
-    public $storage;
-
-    public function __construct()
-    {
-    }
-
-    abstract function displayTextById();
-
-    abstract function displayTextByUrl();
-
-}
-
-abstract class User
-{
-    public $id;
-    public $name;
-    public $role;
-
-    abstract function getTextsToEdit();
-}
-
-class FileStorage extends TelegraphText
-{
-    public static $dir = "~Desktop/PHP/Telegraph";
-
-    public function create($text)
-    {
-        $x = 1;
-        $fn = $text->slug . date("_d-m-y");
-
-        while (file_exists(self::$dir . $fn)) {
-            $fn = $text->slug . date("_d-m-y") . $x;
-            $x++;
-        }
-        $text->slug = $fn;
-        file_put_contents(self::$dir . $fn, serialize($text));
-        return $fn;
-    }
-
-    public function read()
-    {
-        return $this->slug = unserialize(file_get_contents($this->slug));
-    }
-
-    public function update($slug)
-    {
-        return $this->slug;
-    }
-
-    public function delete()
-    {
-        if (unlink(self::$dir . $this->slug)) return 0;
-        else return 1;
-    }
-
-    public function list()
-    {
-        $search = scandir(FileStorage::$dir);
-    }
-}
-
-
 $telegraph = new TelegraphText("Vlad", "ax.txt");
 $telegraph->editText("awdad", "awdwd");
 $telegraph->storeText();
 $telegraph->loadText();
-
-
-
-
