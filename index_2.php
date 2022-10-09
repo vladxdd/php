@@ -116,15 +116,11 @@ class FileStorage extends TelegraphText
         return unserialize(file_get_contents($this->slug));
     }
 
-    public function update($name, $text)
+    public function update()
     {
-        if (file_exists($this->slug)) {
-            $a = unserialize($this->slug);
-            $a['text'] = $text;
-            $a['author'] = $name;
-            $ser = serialize($a);
-            file_put_contents($this->slug, $ser);
-        }
+        $sv = serialize(file_get_contents($this->slug));
+
+
     }
 
     public function delete()
